@@ -571,4 +571,492 @@
     
     .advanced-options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax
+      grid-template-columns: repeat(auto-fit, minmax.advanced-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .advanced-controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px 0;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    
+    .footer-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-link:hover {
+      color: var(--secondary-color);
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+      
+      .url-prefix {
+        padding: 0 10px;
+      }
+    }
+    
+    /* アニメーション */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path class="twinkle" d="M12,1L9,9L1,12L9,15L12,23L15,15L23,12L15,9L12,1Z"/>
+          <circle cx="12" cy="12" r="3" fill="white" opacity="0.5"/>
+        </svg>
+      </div>
+      <h1>インターステラープロキシ</h1>
+      <p class="subtitle">どんなウェブサイトでも宇宙の速さでアクセス</p>
+      <div class="stars-bg" id="stars-bg"></div>
+    </header>
+
+    <div class="main-panel">
+      <form id="proxy-form">
+        <div class="form-group">
+          <label for="url-input">アクセスするURL</label>
+          <div class="url-input-container">
+            <div class="url-prefix">https://</div>
+            <input type="url" id="url-input" placeholder="example.com/path" required autocomplete="off">
+          </div>
+        </div>
+
+        <div class="options-panel">
+          <div class="option-card">
+            <h3 class="option-title"><i class="fas fa-shield-alt"></i> プライバシー保護</h3>
+            <label class="custom-checkbox">
+              <input type="checkbox" id="privacy-mode" checked>
+              <span class="checkmark"></span>
+              プライベートモード
+            </label>
+          </div>
+
+          <div class="option-card">
+            <h3 class="option-title"><i class="fas fa-paint-brush"></i> コンテンツ表示</h3>
+            <div class="select-container">
+              <select id="content-mode">
+                <option value="all">すべてのコンテンツを表示</option>
+                <option value="no-script">スクリプトをブロック</option>
+                <option value="text-only">テキストのみ</option>
+              </select>
+              <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+            </div>
+          </div>
+
+          <div class="option-card">
+            <h3 class="option-title"><i class="fas fa-bolt"></i> 高速モード</h3>
+            <label class="custom-checkbox">
+              <input type="checkbox" id="speed-mode">
+              <span class="checkmark"></span>
+              圧縮を最適化
+            </label>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button type="submit" class="btn-browse pulse">
+            <i class="fas fa-rocket"></i> アクセス開始
+          </button>
+          <button type="button" class="btn-source">
+            <i class="fas fa-code"></i> ソース表示
+          </button>
+          <button type="button" class="btn-settings" id="advanced-toggle">
+            <i class="fas fa-cog"></i> 詳細設定
+          </button>
+        </div>
+
+        <div class="advanced-panel" id="advanced-panel">
+          <h3 class="panel-title"><i class="fas fa-sliders-h"></i> 詳細設定</h3>
+          
+          <div class="advanced-options">
+            <div class="option-card">
+              <h3 class="option-title"><i class="fas fa-user-secret"></i> ユーザーエージェント</h3>
+              <div class="select-container">
+                <select id="user-agent">
+                  <option value="default">デフォルト (Chrome)</option>
+                  <option value="mobile">モバイルデバイス</option>
+                  <option value="firefox">Firefox</option>
+                  <option value="safari">Safari</option>
+                  <option value="edge">Edge</option>
+                </select>
+                <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+              </div>
+            </div>
+
+            <div class="option-card">
+              <h3 class="option-title"><i class="fas fa-cookie-bite"></i> Cookie処理</h3>
+              <div class="select-container">
+                <select id="cookie-handling">
+                  <option value="session">セッションのみ</option>
+                  <option value="keep">保存する</option>
+                  <option value="none">拒否する</option>
+                </select>
+                <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+              </div>
+            </div>
+
+            <div class="option-card">
+              <h3 class="option-title"><i class="fas fa-language"></i> リクエスト言語</h3>
+              <div class="select-container">
+                <select id="language">
+                  <option value="ja">日本語</option>
+                  <option value="en">英語</option>
+                  <option value="auto">自動検出</option>
+                </select>
+                <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="advanced-controls">
+            <button type="button" class="btn-settings" id="advanced-close">
+              <i class="fas fa-times"></i> 閉じる
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">接続中... しばらくお待ちください</p>
+      </div>
+
+      <div class="error" id="error">
+        <div class="error-title"><i class="fas fa-exclamation-triangle"></i> エラーが発生しました</div>
+        <p id="error-message">接続できませんでした。URLを確認して再試行してください。</p>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-header">
+          <div class="result-title"><i class="fas fa-globe"></i> <span id="result-url">example.com</span></div>
+          <div class="result-actions">
+            <button class="btn-icon" id="refresh-btn" title="再読み込み"><i class="fas fa-sync-alt"></i></button>
+            <button class="btn-icon" id="copy-url-btn" title="URLをコピー"><i class="fas fa-copy"></i></button>
+            <button class="btn-icon btn-fullscreen" id="fullscreen-btn" title="全画面表示"><i class="fas fa-expand"></i></button>
+          </div>
+        </div>
+        <div class="result-container">
+          <iframe id="result-frame" sandbox="allow-forms allow-scripts allow-same-origin"></iframe>
+          <pre class="content-result" id="content-result"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="history-panel">
+      <div class="panel-header">
+        <h2 class="panel-title"><i class="fas fa-history"></i> 閲覧履歴</h2>
+        <button type="button" class="btn-settings" id="clear-history">
+          <i class="fas fa-trash"></i> 履歴削除
+        </button>
+      </div>
+
+      <ul class="history-list" id="history-list">
+        <!-- 履歴は動的に生成 -->
+      </ul>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="feature-title">プライバシー保護</h3>
+        <p>個人情報を守りながら、安全にブラウジングできます。トラッカーやスクリプトをブロックし、匿名性を維持します。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h3 class="feature-title">超高速アクセス</h3>
+        <p>最適化された通信プロトコルで、どんなサイトも驚くほど高速にロード。低速な接続でも快適にブラウジングできます。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-unlock"></i></div>
+        <h3 class="feature-title">制限解除</h3>
+        <p>地域制限のあるコンテンツにもアクセス可能。インターネットの自由を取り戻し、世界中のサイトをご利用いただけます。</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 インターステラープロキシ - すべての権利を宇宙に解放</p>
+    <div class="footer-links">
+      <a href="#" class="footer-link">利用規約</a>
+      <a href="#" class="footer-link">プライバシーポリシー</a>
+      <a href="#" class="footer-link">お問い合わせ</a>
+    </div>
+  </footer>
+
+  <script>
+    // 星空の背景を生成
+    document.addEventListener('DOMContentLoaded', function() {
+      const starsContainer = document.getElementById('stars-bg');
+      const starCount = 100;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.width = `${Math.random() * 3 + 1}px`;
+        star.style.height = star.style.width;
+        star.style.opacity = Math.random();
+        star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite ease-in-out ${Math.random() * 5}s`;
+        starsContainer.appendChild(star);
+      }
+      
+      // 詳細設定のトグル
+      const advancedToggle = document.getElementById('advanced-toggle');
+      const advancedPanel = document.getElementById('advanced-panel');
+      const advancedClose = document.getElementById('advanced-close');
+      
+      advancedToggle.addEventListener('click', function() {
+        advancedPanel.style.display = advancedPanel.style.display === 'block' ? 'none' : 'block';
+      });
+      
+      advancedClose.addEventListener('click', function() {
+        advancedPanel.style.display = 'none';
+      });
+      
+      // プロキシフォームの送信
+      const proxyForm = document.getElementById('proxy-form');
+      const urlInput = document.getElementById('url-input');
+      const resultFrame = document.getElementById('result-frame');
+      const contentResult = document.getElementById('content-result');
+      const loading = document.getElementById('loading');
+      const error = document.getElementById('error');
+      const result = document.getElementById('result');
+      const resultUrl = document.getElementById('result-url');
+      
+      proxyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let url = urlInput.value.trim();
+        if (!url) return;
+        
+        // httpを追加
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          url = 'https://' + url;
+        }
+        
+        // UIの更新
+        loading.style.display = 'block';
+        error.style.display = 'none';
+        result.style.display = 'none';
+        
+        // プロキシURLを生成
+        const proxyUrl = `/proxy?url=${encodeURIComponent(url)}`;
+        
+        // コンテンツ表示モードに応じた処理
+        const contentMode = document.getElementById('content-mode').value;
+        
+        if (contentMode === 'text-only') {
+          // テキストのみモードの場合、iframeを非表示にし、コンテンツを直接表示
+          resultFrame.style.display = 'none';
+          contentResult.style.display = 'block';
+          
+          fetch(proxyUrl)
+            .then(response => response.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, 'text/html');
+              
+              // テキストコンテンツを抽出
+              const textContent = extractTextContent(doc);
+              contentResult.textContent = textContent;
+              
+              loading.style.display = 'none';
+              result.style.display = 'block';
+              resultUrl.textContent = url;
+              
+              // 履歴に追加
+              addToHistory(url);
+            })
+            .catch(err => {
+              loading.style.display = 'none';
+              error.style.display = 'block';
+              document.getElementById('error-message').textContent = `エラー: ${err.message}`;
+            });
+        } else {
+          // 通常モードの場合、iframeを表示
+          resultFrame.style.display = 'block';
+          contentResult.style.display = 'none';
+          
+          resultFrame.onload = function() {
+            loading.style.display = 'none';
+            result.style.display = 'block';
+            resultUrl.textContent = url;
+            
+            // 履歴に追加
+            addToHistory(url);
+          };
+          
+          resultFrame.onerror = function() {
+            loading.style.display = 'none';
+            error.style.display = 'block';
+            document.getElementById('error-message').textContent = 'ページのロードに失敗しました。URLを確認して再試行してください。';
+          };
+          
+          resultFrame.src = proxyUrl;
+        }
+      });
+      
+      // テキストコンテンツを抽出する関数
+      function extractTextContent(doc) {
+        // メタタグ情報を取得
+        const title = doc.querySelector('title')?.textContent || 'No Title';
+        const description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+        
+        // 主要なコンテンツを抽出
+        const mainContent = [];
+        const contentElements = doc.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, td, th, blockquote');
+        
+        contentElements.forEach(element => {
+          const text = element.textContent.trim();
+          if (text.length > 0) {
+            mainContent.push(text);
+          }
+        });
+        
+        return `${title}\n\n${description}\n\n${mainContent.join('\n\n')}`;
+      }
+      
+      // 履歴を追加する関数
+      function addToHistory(url) {
+        const historyList = document.getElementById('history-list');
+        const historyItem = document.createElement('li');
+        historyItem.className = 'history-item';
+        
+        const urlElement = document.createElement('div');
+        urlElement.className = 'history-url';
+        urlElement.textContent = url;
+        
+        const actionsElement = document.createElement('div');
+        actionsElement.className = 'history-actions';
+        
+        const visitButton = document.createElement('button');
+        visitButton.className = 'btn-icon';
+        visitButton.title = '再アクセス';
+        visitButton.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+        visitButton.addEventListener('click', function() {
+          urlInput.value = url;
+          proxyForm.dispatchEvent(new Event('submit'));
+        });
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn-icon';
+        deleteButton.title = '削除';
+        deleteButton.innerHTML = '<i class="fas fa-times"></i>';
+        deleteButton.addEventListener('click', function() {
+          historyItem.remove();
+        });
+        
+        actionsElement.appendChild(visitButton);
+        actionsElement.appendChild(deleteButton);
+        
+        historyItem.appendChild(urlElement);
+        historyItem.appendChild(actionsElement);
+        
+        historyList.insertBefore(historyItem, historyList.firstChild);
+      }
+      
+      // 履歴クリアボタン
+      document.getElementById('clear-history').addEventListener('click', function() {
+        document.getElementById('history-list').innerHTML = '';
+      });
+      
+      // ソース表示ボタン
+      document.querySelector('.btn-source').addEventListener('click', function() {
+        const url = urlInput.value.trim();
+        if (!url) return;
+        
+        // httpを追加
+        let fullUrl = url;
+        if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+          fullUrl = 'https://' + fullUrl;
+        }
+        
+        window.open(`/view-source?url=${encodeURIComponent(fullUrl)}`, '_blank');
+      });
+      
+      // 全画面表示ボタン
+      document.getElementById('fullscreen-btn').addEventListener('click', function() {
+        if (resultFrame.requestFullscreen) {
+          resultFrame.requestFullscreen();
+        } else if (resultFrame.webkitRequestFullscreen) {
+          resultFrame.webkitRequestFullscreen();
+        } else if (resultFrame.msRequestFullscreen) {
+          resultFrame.msRequestFullscreen();
+        }
+      });
+      
+      // 再読み込みボタン
+      document.getElementById('refresh-btn').addEventListener('click', function() {
+        if (resultFrame.style.display !== 'none') {
+          resultFrame.contentWindow.location.reload();
+        } else {
+          // テキストモードの場合は再取得
+          proxyForm.dispatchEvent(new Event('submit'));
+        }
+      });
+      
+      // URLコピーボタン
+      document.getElementById('copy-url-btn').addEventListener('click', function() {
+        const currentUrl = resultUrl.textContent;
+        navigator.clipboard.writeText(currentUrl)
+          .then(() => {
+            alert('URLをクリップボードにコピーしました');
+          })
+          .catch(err => {
+            alert('URLのコピーに失敗しました: ' + err);
+          });
+      });
+    });
+  </script>
+</body>
+</html>
